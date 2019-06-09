@@ -4,7 +4,7 @@ import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [{
@@ -15,16 +15,18 @@ export default new Router({
   }, ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.authRequired)) {
-//     if (!store.state.isAuthenticated) {
-//       next({
-//         path: '/login'
-//       });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authRequired)) {
+    if (!store.state.isAuthenticated) {
+      next({
+        path: '/login'
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+export default router
