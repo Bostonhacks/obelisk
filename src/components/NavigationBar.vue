@@ -4,7 +4,6 @@
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn @click="home()" flat>Home</v-btn>
-      <v-btn v-if="user" @click="home()" flat>My Profile</v-btn>
     </v-toolbar-items>
     <v-menu class="hidden-md-and-up">
       <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
@@ -12,11 +11,6 @@
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title @click="home()">Home</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile v-if="user">
-          <v-list-tile-content>
-            <v-list-tile-title @click="home()">My Profile</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>

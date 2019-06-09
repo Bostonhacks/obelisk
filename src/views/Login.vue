@@ -1,5 +1,11 @@
 <template>
+<v-layout
+      align-center
+      column
+      justify-center
+    >
     <authUI/>
+</v-layout>
 </template>
 
 <script>
