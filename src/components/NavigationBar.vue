@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import db from "@/firebase/init.js";
 export default {
   name: "navigationBar",
   computed: {
@@ -44,8 +43,7 @@ export default {
     }
   },
   data() {
-    return {
-    };
+    return {};
   }
 };
 </script>

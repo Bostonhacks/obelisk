@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import { authUi, authUiConfig } from '../firebase/init';
+import { authUi, authUiConfig } from "../firebase/init";
 export default {
-  name: 'authUI',
+  name: "authUI",
   mounted() {
-    authUi.start('#firebaseui-auth-container', authUiConfig);
-  },
+    authUi.start("#firebaseui-auth-container", authUiConfig);
+  }
 };
 </script>
