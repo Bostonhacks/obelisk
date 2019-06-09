@@ -12,18 +12,24 @@ const router = new Router({
       path: "/",
       name: "home",
       component: () => import("./views/Home.vue")
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("./views/Login.vue")
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.authRequired)) {
-    if (!store.state.isAuthenticated) {
-      next({
-        path: "/login"
-      });
-    } else {
+  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+    let user = store.state.user;
+    if (user) {
       next();
+    } else {
+      next({
+        name: "login"
+      });
     }
   } else {
     next();

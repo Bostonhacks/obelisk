@@ -51,10 +51,6 @@ export default {
   },
   data() {
     return {
-      menu: [
-        { iterator: "1", title: "Home", link: "/" },
-        { iterator: "2", title: "My Profile" }
-      ]
     };
   }
 };
