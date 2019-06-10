@@ -25,7 +25,8 @@ export default new Vuex.Store({
       if (!raid.exists) {
         await mydb.set({
           displayName: user.displayName,
-          uid: user.uid
+          uid: user.uid,
+          email: user.email
         });
         raid = await mydb.get();
         context.commit("setUser", raid.data());
