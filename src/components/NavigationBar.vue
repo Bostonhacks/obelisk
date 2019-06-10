@@ -14,9 +14,9 @@
             <v-list-tile-title @click="home()">Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile>
+        <v-list-tile v-if="user">
           <v-list-tile-content>
-            <v-list-tile-title v-if="user" @click="profile()"
+            <v-list-tile-title @click="profile()"
               >My Profile</v-list-tile-title
             >
           </v-list-tile-content>
