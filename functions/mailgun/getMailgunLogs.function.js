@@ -1,7 +1,8 @@
 const functions = require("firebase-functions");
+let config = require("../config/config");
 
 const mailgun = require("mailgun-js")({
-  apiKey: "key-83ff3db5d8c4d6ab27b20da760e2a98e",
+  apiKey: config.mailgunApiKey,
   domain: "bostonhacks.io"
 });
 
