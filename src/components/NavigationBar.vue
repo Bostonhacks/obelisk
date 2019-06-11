@@ -4,6 +4,7 @@
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn @click="home()" flat>Home</v-btn>
+      <v-btn v-if="isAdmin" @click="mailgun()" flat>Mailgun</v-btn>
       <v-btn v-if="user" @click="profile()" flat>My Profile</v-btn>
     </v-toolbar-items>
     <v-menu class="hidden-md-and-up">
@@ -16,9 +17,12 @@
         </v-list-tile>
         <v-list-tile v-if="user">
           <v-list-tile-content>
-            <v-list-tile-title @click="profile()"
-              >My Profile</v-list-tile-title
-            >
+            <v-list-tile-title @click="profile()">My Profile</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile v-if="isAdmin">
+          <v-list-tile-content>
+            <v-list-tile-title @click="mailgun()">Mailgun</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -36,6 +40,20 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
+    },
+    isAdmin() {
+      if (this.$store.state.user) {
+        if (
+          this.$store.state.user.role == "admin" ||
+          this.$store.state.user.role == "superuser"
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
   },
   methods: {
@@ -51,6 +69,9 @@ export default {
     },
     profile() {
       this.$router.push("/profile");
+    },
+    mailgun() {
+      this.$router.push("/mailgun");
     }
   },
   data() {

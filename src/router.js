@@ -11,7 +11,10 @@ const router = new Router({
     {
       path: "/",
       name: "home",
-      component: () => import("./views/Home.vue")
+      component: () => import("./views/Home.vue"),
+      meta: {
+        companyCheck: true
+      }
     },
     {
       path: "/login",
@@ -25,6 +28,14 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/mailgun",
+      name: "mailgun",
+      component: () => import("./views/Mailgun.vue"),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });
@@ -33,11 +44,40 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.requiresAuth)) {
     let user = store.state.user;
     if (user) {
-      next();
+      if (to.name == "profile") {
+        next();
+      } else {
+        if (user.companyName) {
+          next();
+        } else {
+          next({
+            name: "profile"
+          });
+        }
+      }
     } else {
       next({
         name: "login"
       });
+    }
+  } else {
+    next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(rec => rec.meta.companyCheck)) {
+    let user = store.state.user;
+    if (user) {
+      if (user.companyName) {
+        next();
+      } else {
+        next({
+          name: "profile"
+        });
+      }
+    } else {
+      next();
     }
   } else {
     next();

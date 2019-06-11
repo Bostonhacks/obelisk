@@ -26,7 +26,9 @@ export default new Vuex.Store({
         await mydb.set({
           displayName: user.displayName,
           uid: user.uid,
-          email: user.email
+          email: user.email,
+          companyName: null,
+          role: "user"
         });
         raid = await mydb.get();
         context.commit("setUser", raid.data());

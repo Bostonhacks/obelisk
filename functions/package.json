@@ -13,8 +13,13 @@
     "node": "8"
   },
   "dependencies": {
+    "algoliasearch": "^3.33.0",
+    "cors": "^2.8.5",
     "firebase-admin": "~7.0.0",
-    "firebase-functions": "^2.3.0"
+    "firebase-functions": "^2.3.0",
+    "glob": "^7.1.4",
+    "mailgun-js": "^0.22.0",
+    "mailgun.js": "^2.0.1"
   },
   "devDependencies": {
     "eslint": "^5.12.0",

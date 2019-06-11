@@ -1,8 +1,19 @@
-const functions = require('firebase-functions');
+const glob = require("glob");
+const files = glob.sync("./**/*.function.js", {
+  cwd: __dirname,
+  ignore: "./node_modules/**"
+});
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+files.forEach(file => {
+  const functionModule = require(file);
+  const functionNames = Object.keys(functionModule);
+
+  functionNames.forEach(functionName => {
+    if (
+      !process.env.FUNCTION_NAME ||
+      process.env.FUNCTION_NAME === functionName
+    ) {
+      exports[functionName] = functionModule[functionName];
+    }
+  });
+});

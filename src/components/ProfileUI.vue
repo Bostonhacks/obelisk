@@ -6,13 +6,14 @@
           <v-toolbar-title>Profile</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <v-form aria-label="Profile">
+          <v-form ref="form" v-model="valid">
             <v-layout row>
               <v-flex xs12>
                 <v-text-field
                   v-model="name"
                   label="Name"
                   name="name"
+                  readonly
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -22,6 +23,7 @@
                   v-model="email"
                   label="Email"
                   name="email"
+                  readonly
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -31,6 +33,7 @@
                   v-model="companyName"
                   label="Company Name"
                   name="companyName"
+                  :rules="companyNameRules"
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -55,7 +58,9 @@ export default {
     return {
       name: null,
       companyName: null,
-      email: null
+      email: null,
+      valid: false,
+      companyNameRules: [val => !!val || "Company Name Required"]
     };
   },
   mounted() {
@@ -65,14 +70,18 @@ export default {
   },
   methods: {
     async updateProfile() {
-      const ref = db.collection("users").doc(this.user.uid);
-      await ref.update({
-        displayName: this.name,
-        companyName: this.companyName,
-        email: this.email
-      });
-      this.$store.dispatch("setUser");
-      this.$router.push("/");
+      if (this.$refs.form.validate()) {
+        const ref = db.collection("users").doc(this.user.uid);
+        await ref
+          .update({
+            companyName: this.companyName
+          })
+          .then(() => {
+            this.$store.dispatch("setUser").then(() => {
+              this.$router.push("/");
+            });
+          });
+      }
     }
   }
 };

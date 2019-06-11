@@ -12,14 +12,6 @@ export default {
     }
   },
   mounted() {
-    if (!this.user) {
-      authUi.start("#firebaseui-auth-container", authUiConfig);
-    }
-    if (this.user.companyName == undefined) {
-      this.$router.push({ name: "profile" });
-    } else {
-      this.$router.push({ name: "home" });
-    }
     authUi.start("#firebaseui-auth-container", authUiConfig);
   }
 };
