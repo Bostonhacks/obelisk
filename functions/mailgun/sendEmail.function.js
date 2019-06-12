@@ -7,14 +7,32 @@ const mailgun = require("mailgun.js").client({
 });
 
 module.exports.sendEmail = functions.https.onCall((data, context) => {
+  let tracking;
+  let clicktracking;
+  let opentracking;
+  if (data.tracking === true) {
+    tracking = "true";
+  } else {
+    tracking = "false";
+  }
+  if (data.clicktracking === true) {
+    clicktracking = "true";
+  } else {
+    clicktracking = "false";
+  }
+  if (data.opentracking === true) {
+    opentracking = "true";
+  } else {
+    opentracking = "false";
+  }
   var message = {
     from: "BostonHacks<" + data.from + ">",
     to: data.to,
     subject: data.subject,
     text: data.text,
-    "o:tracking": data.tracking,
-    "o:tracking-clicks": data.clicktracking,
-    "o:tracking-opens": data.opentracking
+    "o:tracking": tracking,
+    "o:tracking-clicks": clicktracking,
+    "o:tracking-opens": opentracking
   };
   return mailgun.messages.create("bostonhacks.io", message);
 });

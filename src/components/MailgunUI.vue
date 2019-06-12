@@ -191,16 +191,12 @@
                 </v-dialog>
                 <v-dialog v-model="success" hide-overlay persistent width="300">
                   <v-card color="green" dark>
-                    <v-card-text>
-                      Email Sent Successfully
-                    </v-card-text>
+                    <v-card-text>Email Sent Successfully</v-card-text>
                   </v-card>
                 </v-dialog>
                 <v-dialog v-model="fail" hide-overlay persistent width="300">
                   <v-card color="red" dark>
-                    <v-card-text>
-                      Unable To Send Email
-                    </v-card-text>
+                    <v-card-text>Unable To Send Email</v-card-text>
                   </v-card>
                 </v-dialog>
               </v-form>
@@ -276,6 +272,7 @@ export default {
       ],
       notEmptyRules: [v => !!v || "Field is required"],
       success: false,
+      toEmail: "",
       fail: false,
       dialog: false,
       tracking: false,
@@ -301,22 +298,16 @@ export default {
   methods: {
     async send() {
       if (this.$refs.form.validate()) {
+        this.toEmail = this.to.join();
         let message = {
           from: this.from,
-          to: this.to,
+          to: this.toEmail,
           subject: this.subject,
           text: this.message,
           tracking: this.tracking,
           clicktracking: this.clicktracking,
           opentracking: this.opentracking
         };
-        this.from = null;
-        this.to = null;
-        this.subject = null;
-        this.text = null;
-        this.tracking = false;
-        this.clicktracking = false;
-        this.opentracking = false;
         this.dialog = true;
         firebase
           .functions()
@@ -336,11 +327,17 @@ export default {
   watch: {
     success(val) {
       if (!val) return;
-      setTimeout(() => (this.success = false), 2000);
+      setTimeout(() => {
+        this.success = false;
+        this.$router.go();
+      }, 2000);
     },
     fail(val) {
       if (!val) return;
-      setTimeout(() => (this.fail = false), 2000);
+      setTimeout(() => {
+        this.fail = false;
+        this.$router.go();
+      }, 2000);
     }
   },
   mounted() {
