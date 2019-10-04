@@ -2,6 +2,7 @@
 node_modules
 /dist
 /src/firebase
+/src/stripe
 
 # local env files
 .env.local
